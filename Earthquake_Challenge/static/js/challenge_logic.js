@@ -40,14 +40,14 @@ let baseMaps = {
 // 1. Add a 3rd layer group for the major earthquake data.
 let allEarthquakes = new L.LayerGroup();
 let tectonicPlates = new L.LayerGroup();
-let majorEarthquakes = new L.LayerGroup();
+let majorEQ = new L.LayerGroup();
 
 // 2. Add a reference to the tectonic plates group to the overlays object.
 // 2. Add a reference to the major earthquake group to the overlays object.
 let overlays = {
   "Earthquakes": allEarthquakes,
   "Tectonic Plates": tectonicPlates,
-  "Major Earthquakes": majorEarthquakes
+  "Major Earthquakes": majorEQ
 };
 
 // Then we add a control to the map that will allow the user to change which
@@ -124,20 +124,20 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson").then(function(data) {
 
 // 4. Use the same style as the earthquake data.
-function styleInfoMajorEarthquakes(feature) {
+function styleInfoMajorEQ(feature) {
   return {
     opacity: 1,
     fillOpacity: 1,
-    fillColor: getColorMajorEarthquakes(feature.properties.mag),
+    fillColor: getColorMajorEQ(feature.properties.mag),
     color: "#000000",
-    radius: getRadiusMajorEarthquakes(feature.properties.mag),
+    radius: getRadiusMajorEQ(feature.properties.mag),
     stroke: true,
     weight: 0.5
   };
 }
 
 // 5. Change the color function to use three colors for the major earthquakes based on the magnitude of the earthquake.
-function getColorMajorEarthquakes(magnitude) {
+function getColorMajorEQ(magnitude) {
   if (magnitude > 5) {
     return "#ea2c2c";
   }
@@ -148,7 +148,7 @@ function getColorMajorEarthquakes(magnitude) {
 }
 
 // 6. Use the function that determines the radius of the earthquake marker based on its magnitude.
-function getRadiusMajorEarthquakes(magnitude) {
+function getRadiusMajorEQ(magnitude) {
   if (magnitude === 0) {
     return 1;
   }
@@ -163,13 +163,13 @@ L.geoJson(data, {
     console.log(data);
     return L.circleMarker(latlng);
   },
-  style: styleInfoMajorEarthquakes,
+  style: styleInfoMajorEQ,
   onEachFeature: function(feature, layer) {
     layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
   }
-}).addTo(majorEarthquakes);
+}).addTo(majorEQ);
 // 8. Add the major earthquakes layer to the map.
-majorEarthquakes.addTo(map);
+majorEQ.addTo(map);
 // 9. Close the braces and parentheses for the major earthquake data.
 });
 
