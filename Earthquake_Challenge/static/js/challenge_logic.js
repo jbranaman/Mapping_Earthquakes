@@ -37,11 +37,13 @@ let baseMaps = {
 };
 
 // 1. Add a 2nd layer group for the tectonic plate data.
+// 1. Add a 3rd layer group for the major earthquake data.
 let allEarthquakes = new L.LayerGroup();
 let tectonicPlates = new L.LayerGroup();
 let majorEarthquakes = new L.LayerGroup();
 
 // 2. Add a reference to the tectonic plates group to the overlays object.
+// 2. Add a reference to the major earthquake group to the overlays object.
 let overlays = {
   "Earthquakes": allEarthquakes,
   "Tectonic Plates": tectonicPlates,
@@ -120,7 +122,6 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 
 // 3. Retrieve the major earthquake GeoJSON data >4.5 mag for the week.
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson").then(function(data) {
-
 
 // 4. Use the same style as the earthquake data.
 function styleInfoMajorEarthquakes(feature) {
